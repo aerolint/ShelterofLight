@@ -81,13 +81,13 @@
             return `
             <tr>
                 <td>${d.Donation_ID}</td>
-                <td>${d.Sender_Name}</td>
-                <td>${d.Transaction_Date}</td>
-                <td>${d.Amount_PHP}</td>
-                <td>${d.Payment_Channel || '—'}</td>
-                <td>${d.Reference_Number || '—'}</td>
+                <td>${esc(d.Sender_Name)}</td>
+                <td>${esc(d.Transaction_Date)}</td>
+                <td>${esc(d.Amount_PHP)}</td>
+                <td>${esc(d.Payment_Channel || '—')}</td>
+                <td>${esc(d.Reference_Number || '—')}</td>
                 <td>${receipt}</td>
-                <td>${d.Verification_Status}</td>
+                <td>${esc(d.Verification_Status)}</td>
                 <td>${toggle} <button onclick="removeDonation(${d.Donation_ID})">Delete</button></td>
             </tr>`;
         }).join('');

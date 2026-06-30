@@ -54,6 +54,9 @@ switch (true) {
 
 function get_medical_history(PDO $pdo, int $rescue_id): void
 {
+    // Medical history is sensitive; restrict to admins (the 'all' action already is).
+    require_admin();
+
     if ($rescue_id <= 0) {
         echo json_encode(['success' => false, 'message' => 'Invalid Rescue ID.']);
         return;
@@ -214,4 +217,4 @@ function fetch_joined_history(PDO $pdo, int $rescue_id): array
     ');
     $stmt->execute([$rescue_id]);
     return $stmt->fetchAll();
-}
+}
