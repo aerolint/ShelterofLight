@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
@@ -35,7 +36,7 @@
         <a href="donations.html">Donations</a>
         <a href="applications.html">Applications</a>
 
-        <a href="login-admin.html" class="logout-btn">LOGOUT</a>
+        <a href="login.html" class="logout-btn">LOGOUT</a>
     </nav>
 </header>
 
@@ -116,7 +117,7 @@
         const body = document.getElementById('medicalBody');
         if (!result.success) {
             body.innerHTML = `<tr><td colspan="5">${apiErrorText(result)}</td></tr>`;
-            if (/log in/i.test(result.message || '')) setTimeout(() => window.location.href = 'login-admin.html', 1200);
+            if (/log in/i.test(result.message || '')) setTimeout(() => window.location.href = 'login.html', 1200);
             return;
         }
         body.innerHTML = result.data.length
@@ -152,4 +153,4 @@
 </script>
 
 </body>
-</html>
+</html>

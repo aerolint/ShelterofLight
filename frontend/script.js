@@ -353,7 +353,7 @@ async function loadCategoryGallery(categoryName) {
     container.innerHTML = currentPets.map((pet, index) => `
         <div class="img-box" onclick="handlePetClick(${index})">
             <img src="${esc(petImage(pet))}" alt="${esc(pet.Name)}" loading="lazy"
-                 onerror="this.src='https://via.placeholder.com/220x220/2d2d2d/FFD946?text=No+Image'">
+                 onerror="this.onerror=null;this.src=PLACEHOLDER_IMG">
             <p>${esc(pet.Name)}</p>
         </div>`).join('');
 }
@@ -362,9 +362,22 @@ function handlePetClick(index) {
     openDynamicModal(currentPets[index]);
 }
 
+// Local, no-network placeholder (an inline SVG). The seeded rescues have no
+// Photo_Path, and external placeholder services are unreliable/blocked.
+function placeholderImage(text) {
+    const label = String(text || 'Pet').replace(/[<>&"]/g, '');
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">' +
+        '<rect width="100%" height="100%" fill="#2d2d2d"/>' +
+        '<text x="50%" y="50%" fill="#FFD946" font-family="sans-serif" font-size="26" ' +
+        'text-anchor="middle" dominant-baseline="middle">' + label + '</text></svg>';
+    return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+const PLACEHOLDER_IMG = placeholderImage('No Image');
+
+// Stored Photo_Path is web-root-relative to the backend (e.g. /uploads/rescues/x.jpg),
+// so prefix the backend folder to reach it from a frontend page.
 function petImage(pet) {
-    return pet.Photo_Path ||
-        'https://via.placeholder.com/400x400/2d2d2d/FFD946?text=' + encodeURIComponent(pet.Name || 'Pet');
+    return pet.Photo_Path ? ('../../backend' + pet.Photo_Path) : placeholderImage(pet.Name);
 }
 
 function setText(id, value) {
@@ -572,7 +585,7 @@ function createPetCard(pet) {
     const statusColor = pet.Status === 'Special Needs' ? '#dc3545' : '#17a2b8';
     card.innerHTML = `
         <img src="${esc(petImage(pet))}" alt="${esc(pet.Name)}" style="width:100%;height:220px;object-fit:cover;background:#2d2d2d;"
-             onerror="this.src='https://via.placeholder.com/400x300/2d2d2d/FFD946?text=No+Image'">
+             onerror="this.onerror=null;this.src=PLACEHOLDER_IMG">
         <div style="padding:18px 20px 20px;">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
                 <h3 style="color:#FFD946;font-size:22px;font-weight:700;margin:0;">${esc(pet.Name || 'Unnamed')}</h3>
@@ -637,6 +650,7 @@ Object.assign(window, {
     getMedicalHistory, getAllMedicalRecords, getClinics, getRescueDropdown, addMedicalLog, deleteMedicalRecord,
     getDashboard,
     showNotification, validateForm, apiErrorText,
+    placeholderImage, PLACEHOLDER_IMG,
     loadCategoryGallery, handlePetClick, openDynamicModal,
     loadCarouselPets, changeSlide, goToSlide,
     loadSpecialNeedsCarousel, loadNewlyAdmittedCarousel,

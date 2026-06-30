@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
@@ -39,7 +40,7 @@
         <a href="medical.html">Medical Records</a>
         <a href="donations.html">Donations</a>
         <a href="applications.html">Applications</a>
-        <a href="login-admin.html" class="logout-btn">LOGOUT</a>
+        <a href="login.html" class="logout-btn">LOGOUT</a>
     </nav>
 </header>
 
@@ -105,7 +106,7 @@
         const result = await getDashboard('all');
         if (!result.success) {
             showNotification('Please log in as an admin to view the dashboard.', 'warning');
-            setTimeout(() => window.location.href = 'login-admin.html', 1200);
+            setTimeout(() => window.location.href = 'login.html', 1200);
             return;
         }
         renderRescueCounts(result.data.rescue_counts || []);
@@ -150,4 +151,4 @@
 </script>
 
 </body>
-</html>
+</html>

@@ -1,4 +1,5 @@
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
@@ -37,7 +38,7 @@
 
     <div class="signup-text">
         <p>ALREADY HAVE AN ACCOUNT? <br>
-        <a href="login-admin.html" style="color: #000; font-weight: bold;">Login</a></p>
+        <a href="login.html" style="color: #000; font-weight: bold;">Login</a></p>
     </div>
 
     <script>
@@ -63,11 +64,11 @@
         });
         if (result.success) {
             showNotification('Account created. Ask a DB admin to grant Admin role, then log in.', 'info');
-            window.location.href = 'login-admin.html';
+            window.location.href = 'login.html';
         } else {
             showNotification(apiErrorText(result), 'error');
         }
     }
     </script>
 
-</body>
+</body>
