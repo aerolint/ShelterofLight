@@ -4,6 +4,12 @@ CREATE DATABASE IF NOT EXISTS `shelter_of_light`
 
 USE `shelter_of_light`;
 
+-- Clean slate so this script can be re-imported without "Duplicate entry" errors.
+-- (Drops existing shelter tables and recreates them from scratch.)
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `Adoption_Applications`, `Donations`, `Medical_Records`, `Clinics`, `Rescues`, `Users`;
+SET FOREIGN_KEY_CHECKS = 1;
+
 CREATE TABLE IF NOT EXISTS `Users` (
     `User_ID`               INT           AUTO_INCREMENT PRIMARY KEY,
     `Username`              VARCHAR(50)   NOT NULL UNIQUE,
@@ -181,4 +187,4 @@ VALUES
 ('Ginger', 'Dog', 'Aspin', 'Adopted', 1, 'Manila', '2 years', 'Healthy', 'PawsFirst'),
 ('Jasper', 'Cat', 'Siamese', 'Adopted', 1, 'Makati', '3 years', 'Healthy', 'ShelterCare'),
 ('Daisy', 'Dog', 'Shih Tzu', 'Adopted', 1, 'Pasay', '2 years', 'Healthy', 'CuddlyCare'),
-('Luna', 'Cat', 'Ragdoll', 'Adopted', 1, 'Laguna', '1 year', 'Healthy', 'PawsFirst');
+('Luna', 'Cat', 'Ragdoll', 'Adopted', 1, 'Laguna', '1 year', 'Healthy', 'PawsFirst');
