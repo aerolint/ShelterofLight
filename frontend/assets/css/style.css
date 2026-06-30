@@ -1,0 +1,553 @@
+:root {
+    --brand-purple: #080808; 
+    --brand-yellow: #000000; 
+    --brand-black: #ffd946;
+    --container-gray: #d1d1d1;
+}
+
+nav a, .dropbtn {
+    font-size: 19px !important; 
+}
+
+.retro-header {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 32px;
+    text-transform: uppercase;
+    color: #000; 
+    letter-spacing: 1px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 170px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    box-sizing: border-box;
+}
+
+.dropdown-content a:hover {
+    background-color: #e3dede;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.login-page {
+    background-color: #d1d1d1;
+    margin: 0;
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.login-container {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    width: 350px;
+    margin-top: 20px;
+}
+
+.signup-text {
+    margin-top: 20px;
+    text-align: center;
+    color: #000;
+}
+
+.login-container label {
+    color: #ffffff;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+}
+
+.login-container button {
+    background-color: #FFD946; 
+    color: #000000;            
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;       
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s; 
+}
+
+.login-container button:hover {
+    background-color: #e6c23f; 
+}
+
+.journey-title {
+    font-weight: 800; 
+    text-transform: uppercase;
+    color: #000000;
+    margin-top: 0;    
+    padding-top: 0;
+}
+
+.hero-wrapper { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+    margin-bottom: 40px; 
+}
+
+.hero-box { 
+    background: #ffd946; 
+    padding: 30px; 
+    border-radius: 20px; 
+    width: 100%;
+    box-sizing: border-box; 
+}
+
+.hero-box.image-only { 
+    padding: 0; 
+    overflow: hidden; 
+    height: 450px;
+}
+
+.hero-box.image-only img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block; 
+}
+
+.image-box {
+    margin-bottom: 15px; 
+}
+
+.image-box img {
+    display: block;      
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.campaign-title {
+    margin: 0 0 5px 0;   
+    font-size: 1rem;
+    font-weight: bold;
+    padding-top: 25px;
+}
+
+.campaign-desc {
+    font-size: 0.85rem;
+    color: #555;
+    display: block;     
+    line-height: 1.4;
+}
+
+.logout-header {
+    text-align: center;
+}
+
+.logout-btn {
+    background-color: #ffd946; 
+    color: #000000;           
+    padding: 10px 30px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid #0a0a0a;
+    display: inline-block;
+}
+
+.adoption-form-box h2 {
+    font-weight: bold;
+    font-size: 24px; 
+    margin-bottom: 20px;
+}
+
+.adoption-form-box {
+    background-color: #e0e0e0; 
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 600px;
+    margin-top: -50px; 
+    margin-right: auto;
+    margin-bottom: 15px;
+    margin-left: auto;
+}
+
+.adoption-form-box label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.adoption-form-box input, 
+.adoption-form-box textarea {
+    width: 100%;
+    padding: 10px;        
+    margin-bottom: 20px; 
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-sizing: border-box; 
+}
+
+.adoption-form-box button {
+    display: block;
+    margin-left: auto;
+    padding: 10px 20px;
+    background-color: #ffd946;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.adoption-form-box button:hover {
+    background-color: #FFC107; 
+}
+
+.pref-btn {
+    width: 80%;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto;
+}
+
+.pref-btn.active {
+    background-color: #FFD700 !important; 
+    border-color: #DAA520 !important;
+    color: #000 !important;
+}
+
+.pref-btn:hover {
+    background-color: #e0e0e0;
+}
+
+body { 
+    font-family: 'Roboto', sans-serif; 
+    background-color: #000000; 
+    margin: 0; 
+}
+
+header { 
+    background-color: var(--brand-black); 
+    color: var(--brand-yellow); 
+    padding: 20px 50px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+header nav a { 
+    color: var(--brand-yellow); 
+    margin-left: 25px; 
+    text-decoration: none; 
+    font-weight: bold; 
+}
+
+.main-content { 
+    width: 80%; 
+    margin: 40px auto; 
+}
+
+.header-row { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+    margin-bottom: 20px; 
+}
+
+.logo-box { 
+    width: 120px; 
+    height: 120px; 
+    background-color: var(--container-gray); 
+    border-radius: 10px; 
+}
+
+.campaign-grid { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px; 
+    margin-top: 20px; 
+}
+
+.campaign-item { 
+    background: #FFD946; 
+    padding: 15px; 
+    border-radius: 15px; 
+    text-align: center; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+}
+
+.image-box { 
+    background-color: var(--container-gray); 
+    width: 100%; 
+    height: 150px; 
+    border-radius: 10px; 
+    margin-bottom: 10px; 
+}
+
+h1 { 
+    font-family: 'Bright Retro', sans-serif; 
+    color: var(--brand-purple); 
+}
+
+/* ============================================
+   CAROUSEL STYLES
+   ============================================ */
+
+.carousel-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 30px auto;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    background: #111;
+}
+
+.carousel-slides {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    height: 480px;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+}
+
+.carousel-slide-content {
+    position: absolute;
+    bottom: 50px;
+    left: 60px;
+    color: #fff;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.9);
+    max-width: 55%;
+}
+
+.carousel-slide-content h2 {
+    font-size: 44px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: #FFD946;
+    letter-spacing: 1px;
+}
+
+.carousel-slide-content .pet-details {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 12px 0 14px;
+}
+
+.carousel-slide-content .pet-details span {
+    background: rgba(255,217,70,0.15);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    border: 1px solid rgba(255,217,70,0.2);
+    color: #fff;
+}
+
+.carousel-slide-content p {
+    font-size: 17px;
+    opacity: 0.9;
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+
+.carousel-slide-content .btn-adopt {
+    display: inline-block;
+    background: #FFD946;
+    color: #000;
+    padding: 12px 36px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.carousel-slide-content .btn-adopt:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(255,217,70,0.4);
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,217,70,0.2);
+    color: #FFD946;
+    border: 2px solid rgba(255,217,70,0.4);
+    padding: 14px 20px;
+    cursor: pointer;
+    font-size: 22px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.carousel-btn:hover {
+    background: #FFD946;
+    color: #000;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-btn.prev { left: 18px; }
+.carousel-btn.next { right: 18px; }
+
+.carousel-dots {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.carousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+    background: #FFD946;
+    border-color: #FFD946;
+    transform: scale(1.2);
+}
+
+.carousel-dot:hover {
+    background: #FFD946;
+}
+
+.carousel-section-title {
+    color: #FFD946;
+    font-size: 32px;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 30px 0 10px;
+}
+
+/* ============================================
+   RESPONSIVE STYLES
+   ============================================ */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .carousel-slides {
+        height: 350px;
+    }
+    .carousel-slide-content {
+        left: 30px;
+        bottom: 35px;
+        max-width: 75%;
+    }
+    .carousel-slide-content h2 {
+        font-size: 30px;
+    }
+    .carousel-slide-content p {
+        font-size: 15px;
+    }
+    .carousel-slide-content .pet-details span {
+        font-size: 12px;
+        padding: 3px 12px;
+    }
+    .carousel-btn {
+        padding: 12px 16px;
+        font-size: 18px;
+    }
+    .carousel-section-title {
+        font-size: 26px;
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+    .carousel-slides {
+        height: 280px;
+    }
+    .carousel-slide-content {
+        left: 20px;
+        bottom: 25px;
+        max-width: 85%;
+    }
+    .carousel-slide-content h2 {
+        font-size: 22px;
+    }
+    .carousel-slide-content p {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+    .carousel-slide-content .pet-details span {
+        font-size: 10px;
+        padding: 2px 10px;
+    }
+    .carousel-slide-content .btn-adopt {
+        padding: 8px 20px;
+        font-size: 12px;
+    }
+    .carousel-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+    .carousel-dot {
+        width: 8px;
+        height: 8px;
+    }
+    .carousel-section-title {
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+}

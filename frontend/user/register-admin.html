@@ -1,0 +1,43 @@
+<head>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<script src="../script.js"></script>
+
+<body class="login-page"> 
+
+    <h1 style="text-align: center; color: #000; margin: 0;">CREATE AN ACCOUNT</h1>
+
+    <div class="login-container">
+        <form action="" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault(); window.location.href='dashboard.html';">
+            <label>First Name</label>
+            <input type="text" name="First_Name" required>
+            
+            <label>Last Name</label>
+            <input type="text" name="Last_Name" required>
+            
+            <label>Email Address</label>
+            <input type="email" name="Email" required>
+
+            <label>Username</label>
+            <input type="text" name="Username" required>
+
+            <label>Password</label>
+            <input type="password" name="Password" required>
+            
+            <label>Phone Number</label>
+            <div style="display: flex; gap: 10px;">
+            <input type="text" value="+63" style="width: 60px;" readonly>
+            <input type="tel" name="Phone_Number" required pattern="[0-9]{10,}" title="Please enter at least 10 digits">
+            </div>
+            
+            <button type="submit" style="width: 100%; padding: 10px; cursor: pointer;">NEXT →</button>
+        </form>
+    </div>
+
+    <div class="signup-text">
+        <p>ALREADY HAVE AN ACCOUNT? <br> 
+        <a href="login-admin.html" style="color: #000; font-weight: bold;">Login</a></p>
+    </div>
+
+</body>

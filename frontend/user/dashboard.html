@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; }
+    
+        .admin-nav { background: transparent; padding: 15px; display: flex; justify-content: space-around; align-items: center;}
+        .admin-nav a { color: #000; text-decoration: none; font-weight: bold; }
+        .admin-nav a:hover { color: purple; }
+
+        .logout-btn { border: 1px solid #000; border-radius: 20px; transition: 0.3s; padding: 8px 20px; }
+        .logout-btn:hover { background-color: #fff; color: #000 !important; }
+
+        .header-font { font-family: 'Alfa Slab One', cursive; text-align: center; }
+        
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; }
+        
+        .panel { background-color: #1a1a1a; border: 1px solid #fff; border-radius: 15px; padding: 20px; color: #fff; }
+        
+        .pie-chart { width: 200px; height: 200px; border-radius: 50%; border: 2px solid #444; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; color: #fff; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #444; }
+    </style>
+</head>
+
+<script src="../script.js"></script>
+
+
+<body>
+
+<header>
+    <div class="retro-header">SHELTER OF LIGHT</div>
+    <nav class="admin-nav">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="rescues.html">Rescues</a>
+        <a href="medical.html">Medical Records</a>
+        <a href="donations.html">Donations</a>
+        <a href="applications.html">Applications</a>
+        <a href="login-admin.html" class="logout-btn">LOGOUT</a>
+    </nav>
+</header>
+
+<div class="header-font" style="margin-top: 40px;">
+    <h3 style="font-size: 20px; margin: 0; color: #ffd464;">DASHBOARD</h3>
+    <h1 style="font-size: 50px; margin: 0; color: #ffd464 !important; font-family: 'Alfa Slab One', cursive;">Manage</h1>
+</div>
+
+<div class="dashboard-grid">
+    <div class="panel">
+        <h3 style="text-align: center; margin-top: 0;">TOTAL ACTIVE RESCUES</h3>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+            <div id="rescue-pie-chart" class="pie-chart"></div>
+            <div id="rescue-legend" style="font-size: 12px; line-height: 1.8; text-align: left;">
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel">
+        <h3 style="text-align: center; margin-top: 0;">PENDING ADOPTION FORMS</h3>
+        <table>
+            <thead>
+                <tr><th>APPLICATION ID</th><th>STATUS</th></tr>
+            </thead>
+            <tbody id="adoption-table-body">
+               
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="dashboard-grid">
+    <div class="panel">
+        <h3 style="text-align: center; margin-top: 0;">UNVERIFIED DONATION LOGS</h3>
+        <table>
+            <thead>
+                <tr><th>REF NUMBER</th><th>STATUS</th></tr>
+            </thead>
+            <tbody id="donation-table-body">
+                
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="panel">
+        <h3 style="text-align: center; margin-top: 0;">ACTIVE VIRTUAL VOLUNTEERS</h3>
+        <table>
+            <thead>
+                <tr><th>APP ID</th><th>NAME</th></tr>
+            </thead>
+            <tbody id="volunteer-table-body">
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

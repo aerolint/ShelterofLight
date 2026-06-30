@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        body { margin: 0; padding: 0; font-family: sans-serif; }
+        
+        .section-black { background-color: #000000; padding: 60px 20px; color: #ffffff; }
+        .section-yellow { background-color: #FFD946; padding: 60px 20px; color: #000000; }
+        
+        .about-section { font-size: 25px; text-align: center; }
+        .about-title { font-size: 3em; margin-bottom: 20px; }
+        .about-text { max-width: 800px; margin: 0 auto 40px; line-height: 1.6; }
+        
+        .team-member { font-size: 25px; display: flex; align-items: center; gap: 20px; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .vet-entry { font-size: 20px; display: flex; align-items: center; gap: 20px; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .image-placeholder { width: 200px; height: 200px; background-color: #ccc; border: 1px solid #999; flex-shrink: 0; }
+        .text-content { text-align: left; }
+        .vets-contact-container { font-size: 20px; display: flex; justify-content: space-around; padding: 40px; align-items: flex-start; }
+        .contact-list { list-style: none; padding: 0; text-align: left; }
+        .contact-list li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .dot { width: 15px; height: 15px; background-color: #999; border-radius: 50%; }
+        
+        .section-yellow, .section-yellow h1, .section-yellow h3, .section-yellow p { color: #000000 !important; }
+        .section-black, .section-black h1, .section-black h2, .section-black h3, .section-black p, .section-black li { color: #ffffff !important; }
+        
+        header a { color: initial !important; }
+    </style>
+</head>
+
+<script src="../script.js"></script>
+
+<body>
+
+<header>
+    <div class="retro-header">SHELTER OF LIGHT</div>
+    <nav>
+        <a href="index.html">Home</a>
+        
+        <div class="dropdown">
+            <a href="first-rescue.html" class="dropbtn">Rescues</a>
+            <div class="dropdown-content">
+                <a href="first-rescue.html">First Rescues</a>
+                <a href="newly-admitted.html">Newly Admitted</a>
+                <a href="under-treatment.html">Under Treatment</a>
+                <a href="under-observation.html">Under Observation</a>
+                <a href="special-needs.html">Special Needs (Permanent)</a>
+                <a href="looking-for-foster.html">Looking for Foster</a>
+                <a href="adopted.html">Adopted</a>
+            </div>
+        </div>
+        
+       <div class="dropdown">
+    <a href="#" class="dropbtn">Adoption</a>
+    <div class="dropdown-content">
+        <a href="adoption-tracker.html">Adoption Tracker</a>
+        <a href="adoption-form.html">Adoption Form</a>
+    </div>
+</div>
+        
+        <a href="rainbow-bridge.html">Rainbow Bridge</a>
+        <a href="about-us.html">About Us</a>
+
+    <div class="dropdown">
+            <a href="#" class="dropbtn">Support Us</a>
+            <div class="dropdown-content">
+                <a href="Volunteer.html">Volunteer Form</a>
+                <a href="Donate.html">Donate</a>
+           </div>
+        </div>
+
+        <a href="login.html" class="logout-btn">LOGOUT</a>
+    </nav>
+</header>
+
+<div class="section-black about-section">
+    <h1 class="about-title">ABOUT US</h1>
+    <p class="about-text">We have undoubtedly gone through a lot of challenges. Some of these challenges, we are still trying to solve. We honestly do not know how long SoL can keep on, but we are not giving up. We will keep watering the hope in our hearts and looking forward, I will still persevere to build our dream SoL sanctuary for our rescued cats and dogs. I will work even harder to make this dream come true.</p>
+</div>
+
+<div class="section-yellow">
+    <h1 class="about-title" style="text-align: center;">SoL Family</h1>
+
+    <div class="team-member">
+        <img src="../assets/images/rosie.png" alt="Rosie" width="200" height="200" style="border-radius: 10px; object-fit: cover;">
+        <div class="text-content">
+            <h3>THIS IS ME, ROSIE</h3>
+            <p>I generally manage Shelter of Light alone, I am also helped with some physical labor by my loving family and our virtual volunteers. I am highly grateful to all of them as SoL would not be possible without their love and help.</p>
+        </div>
+    </div>
+
+    <div class="team-member" style="flex-direction: row-reverse;">
+        <img src="../assets/images/rosa.png" alt="Rosa" width="200" height="200" style="border-radius: 10px; object-fit: cover;">
+        <div class="text-content">
+            <h3>NANAY ROSA</h3>
+            <p>Nanay helps me care for the cats, especially the kittens. She cleans, gives vitamins, and feeds the cats and some of the dogs.</p>
+        </div>
+    </div>
+
+    <div class="team-member">
+        <img src="../assets/images/fredo.png" alt="Fredo" width="200" height="200" style="border-radius: 10px; object-fit: cover;">
+        <div class="text-content">
+            <h3>TATAY FREDO</h3>
+            <p>Tatay takes care of of some of the dogs of SoL. He is particularly in charge of walking them and of cooking for the SoL family and furmily.</p>
+        </div>
+    </div>
+
+    <div class="team-member" style="flex-direction: row-reverse;">
+        <img src="../assets/images/ralph.png" alt="Ralph" width="200" height="200" style="border-radius: 10px; object-fit: cover;">
+        <div class="text-content">
+            <h3>MY BROTHER, RALPH</h3>
+            <p>Ralph cleans the house when he can and cares for most of the dogs. He accompanies me also at the vet.</p>
+        </div>
+    </div>
+</div>
+
+<div class="section-black vets-contact-container">
+    <div>
+        <h2>OUR VETS</h2>
+        <div class="vet-entry">
+    <img src="../assets/images/vetlink.jpg" alt="Vetlink Logo" width="100" height="100" style="border-radius: 50%; object-fit: cover;">
+        <div><h3>Vetlink - Paltok</h3><p>One of our first vets, Vetlink has accepted us when we were very new in the animal welfare field. They have cared for a lot of our rescues in the past years, especially Doc Eugene and Doc Gina. </p></div></div>
+        <div class="vet-entry">
+    <img src="../assets/images/furrproject.jpg" alt="Furrproject Logo" width="100" height="100" style="border-radius: 50%; object-fit: cover;">
+        <div><h3>The Furr Project</h3><p>TFP has demonstrated expertise and care for our rescues. We have the utmost trust in their capabilities. They have been a true blessing. Special thanks to Ms. Cindy, Doc Zander, Doc Jan, Doc Weelen, and the rest of the team.</p></div></div>
+        <div class="vet-entry">
+    <img src="../assets/images/doc.jpg" alt="DocGab Logo" width="100" height="100" style="border-radius: 50%; object-fit: cover;">
+        <div><h3>Doc Gab and Team</h3><p>Doc Gab has been our vet for years. Whenever we have a kapon, they are the ones we connect with. Thank you to the team, especially to Doc Gab, Doc Pao, and Doc Simon. </p></div></div>
+        <div class="vet-entry">
+    <img src="../assets/images/vetsonpoint.jpg" alt="Vetsonpoint Logo" width="100" height="100" style="border-radius: 50%; object-fit: cover;">
+        <div><h3>Vets on Point</h3><p>Our current vet clinic, they have also shown utmost kindness, understanding, and patience towards us and our rescues. They treat everyone with fairness which we utterly appreciate. </p></div></div>
+    </div>
+    
+    <div>
+        <h2>CONTACT US</h2>
+        <ul class="contact-list">
+            <li><div class="dot"></div> shelteroflightph@gmail.com</li>
+            <li><div class="dot"></div> shelteroflight.com</li>
+            <li><div class="dot"></div> facebook.com/shelteroflightph</li>
+            <li><div class="dot"></div> @shelteroflightph</li>
+            <li><div class="dot"></div> @shelteroflight</li>
+            <li><div class="dot"></div> @shelteroflightph</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

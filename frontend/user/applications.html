@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        body { background-color: #000; color: #fff; font-family: sans-serif; }
+        .admin-nav { background: transparent; padding: 15px; display: flex; justify-content: space-around; align-items: center; }
+        .admin-nav a { color: #000; text-decoration: none; font-weight: bold; }
+        .admin-nav a:hover { color: purple; }
+        .header-font { font-family: 'Alfa Slab One', cursive; text-align: center; }
+    
+        table { width: 95%; margin: 40px auto; border-collapse: collapse; color: #fff; }
+        th, td { padding: 15px; text-align: center; border: 1px solid #444; }
+        th { background: #333; }
+
+        .photo-box { width: 60px; height: 40px; border: 1px solid #777; background: #222; margin: 0 auto; }
+
+        .logout-btn { border: 1px solid #000; border-radius: 20px; transition: 0.3s; padding: 8px 20px; }
+
+        .logout-btn:hover { background-color: #fff; color: #000 !important; }
+    </style>
+</head>
+
+<script src="../script.js"></script>
+
+<body>
+
+<header>
+    <div class="retro-header">SHELTER OF LIGHT</div>
+    <nav class="admin-nav">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="rescues.html">Rescues</a>
+        <a href="medical.html">Medical Records</a>
+        <a href="donations.html">Donations</a>
+        <a href="applications.html" style="color: purple;">Applications</a>
+
+        <a href="login-admin.html" class="logout-btn">LOGOUT</a>
+    </nav>
+</header>
+
+<div class="header-font" style="margin-top: 40px;">
+    <h1 style="font-size: 50px; margin: 0; color: #ffd464 !important; font-family: 'Alfa Slab One', cursive;">Applications</h1>
+</div>
+
+<table id="appTable" contenteditable="true">
+    <thead>
+        <tr>
+            <th>Application ID</th><th>Date Submitted</th><th>Applicant Name</th>
+            <th>Target Rescue Name</th><th>Unique Tracker</th><th>Action (Photo)</th><th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td><td></td><td></td><td></td><td></td>
+            <td><div class="photo-box"></div></td><td></td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

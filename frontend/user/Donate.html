@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+    .payment-text {
+        font-size: 16px; 
+    }
+
+    .adoption-form-box, 
+    .adoption-form-box label, 
+    .adoption-form-box input, 
+    .adoption-form-box textarea,
+    .submission-confirmation {
+        color: #000000 !important;
+    }
+    .admin-nav { 
+            background: transparent; 
+            padding: 15px; 
+            display: flex; 
+            justify-content: space-around; 
+            align-items: center; 
+        }
+
+        .admin-nav a { 
+            color: #000; 
+            text-decoration: none; 
+            font-weight: bold; 
+            padding: 5px 10px; 
+        }
+
+        .admin-nav a:hover { color: purple; }
+
+        .logout-btn { 
+            border: 2px solid #000; 
+            border-radius: 20px; 
+            transition: 0.3s; 
+            padding: 10px 30px; 
+            font-size: 20px;   
+        }
+
+        .logout-btn:hover { background-color: #fff; color: #000 !important; }
+    </style>
+</head>
+
+<script src="../script.js"></script>
+
+<body>
+
+<header>
+    <div class="retro-header">SHELTER OF LIGHT</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="first-rescue.html" class="dropbtn">Rescues</a>
+            <div class="dropdown-content">
+                <a href="first-rescue.html">First Rescues</a>
+                <a href="newly-admitted.html">Newly Admitted</a>
+                <a href="under-treatment.html">Under Treatment</a>
+                <a href="under-observation.html">Under Observation</a>
+                <a href="special-needs.html">Special Needs (Permanent)</a>
+                <a href="looking-for-foster.html">Looking for Foster</a>
+                <a href="adopted.html">Adopted</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Adoption</a>
+            <div class="dropdown-content">
+                <a href="adoption-tracker.html">Adoption Tracker</a>
+                <a href="adoption-form.html">Adoption Form</a>
+            </div>
+        </div>
+        <a href="rainbow-bridge.html">Rainbow Bridge</a>
+        <a href="about-us.html">About Us</a>
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Support Us</a>
+            <div class="dropdown-content">
+                <a href="Volunteer.html">Volunteer Form</a>
+                <a href="Donate.html">Donate</a>
+            </div>
+        </div>
+
+        <a href="login.html" class="logout-btn">LOGOUT</a>
+    </nav>
+</header>
+
+<div class="donate-container" style="display: flex; gap: 40px; padding: 50px; justify-content: center; align-items: flex-start;">
+    
+    <div style="flex: 1; max-width: 400px; color: #ffffff;">
+        <h2 style="margin-top: 0; color: #ffffff; font-size: 35px;">Donate Through</h2>
+        <div style="display: flex; justify-content: space-around; gap: 10px;">
+            <div style="text-align: center;">
+                <img src="../assets/images/Gcash.png" width="200" height="200">
+                <p class="payment-text"><strong>GCASH</strong><br>09772119959<br>Rosemarie A</p>
+            </div>
+            <div style="text-align: center;">
+                <img src="../assets/images/Paymaya.png" width="200" height="200">
+                <p class="payment-text"><strong>PAYMAYA</strong><br>09772119959<br>Rosemarie A</p>
+            </div>
+            <div style="text-align: center;">
+                <img src="../assets/images/Paypal.png" width="200" height="200">
+                <p class="payment-text"><strong>PAYPAL</strong><br>rosemarieaquino<br>0914@gmail.com</p>
+            </div>
+        </div>
+        <h3 style="margin-top: 20px; color: #ffffff; font-size: 25px;">BDO: 001050275614</h3>
+        <p style="margin-top: 10px; font-size: 20px; font-style: italic;">
+            We also accept in-kind help and direct payment to the vet, just message us for details.
+        </p>
+    </div>
+
+    <div id="donate-form-box" class="adoption-form-box" style="flex: 1; max-width: 500px; padding: 20px; background-color: #d3d3d3; border-radius: 15px; margin-top: 20px; margin-right: 20px;">
+        <form onsubmit="submitDonateForm(event)">
+            <label>Name</label><input type="text" name="name" required style="display:block; width:100%; margin-bottom:10px;">
+            <label>Date of Transaction</label><input type="date" name="date" required style="display:block; width:100%; margin-bottom:10px;">
+            <label>Amount in PHP</label><input type="number" name="amount" required style="display:block; width:100%; margin-bottom:10px;">
+            <label>Payment Channel Used</label><input type="text" name="channel" required style="display:block; width:100%; margin-bottom:10px;">
+            <label>Reference Number</label><input type="text" name="ref" required style="display:block; width:100%; margin-bottom:10px;">
+            <label>Screenshot</label><input type="file" style="padding: 10px; display:block; width:100%; margin-bottom:10px;">
+            <label>Optional Message</label><textarea name="message" rows="3" style="display:block; width:100%; margin-bottom:10px;"></textarea>
+            
+            <button type="submit" style="width: 100%; margin-top: 15px; padding: 10px; cursor: pointer; background-color: #FFD700; border: none; font-weight: bold;">SUBMIT FORM</button>
+        </form>
+    </div>
+
+    <div id="submission-confirmation" class="adoption-form-box submission-confirmation" style="flex: 1; max-width: 500px; padding: 40px; background-color: #d3d3d3; border-radius: 15px; margin-top: 20px; margin-right: 20px; display: none; text-align: center;">
+        <h2>DONATION SENT</h2>
+        <p>Thank you so much for your donation. It means a lot to us!!</p>
+        <button onclick="window.location.href='index.html'" style="padding: 10px 20px; background-color: #FFD700; border: none; cursor: pointer; font-weight: bold; margin-top: 20px;">BACK TO HOME</button>
+    </div>
+</div>
+
+
+<script>
+    function submitDonateForm(event) {
+        event.preventDefault();
+        document.getElementById('donate-form-box').style.display = 'none';
+        document.getElementById('submission-confirmation').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

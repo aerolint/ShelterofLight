@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        body { background-color: #000; color: #fff; font-family: sans-serif; }
+        
+        .img-box { width: 220px; height: 220px; background-color: #999; border: 1px solid #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; }
+        .modal-content { background: #000; color: #fff; border: 1px solid #fff; margin: 5% auto; padding: 30px; width: 70%; display: flex; gap: 40px; }
+        
+        .pet-details { line-height: 1.8; }
+        .header-font { font-family: 'Alfa Slab One', cursive !important; }
+        .tight-spacing { margin: 0 !important; padding: 0 !important; }
+    </style>
+</head>
+
+<script src="script.js" defer></script>
+
+<script>
+    window.onload = () => loadCategoryGallery('Under Observation');
+</script>
+
+<body>
+
+<header>
+    <div class="retro-header">SHELTER OF LIGHT</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="first-rescue.html" class="dropbtn">Rescues</a>
+            <div class="dropdown-content">
+                <a href="first-rescue.html">First Rescues</a>
+                <a href="newly-admitted.html">Newly Admitted</a>
+                <a href="under-treatment.html">Under Treatment</a>
+                <a href="under-observation.html">Under Observation</a>
+                <a href="special-needs.html">Special Needs (Permanent)</a>
+                <a href="looking-for-foster.html">Looking for Foster</a>
+                <a href="adopted.html">Adopted</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Adoption</a>
+            <div class="dropdown-content">
+                <a href="adoption-tracker.html">Adoption Tracker</a>
+                <a href="adoption-form.html">Adoption Form</a>
+            </div>
+        </div>
+        <a href="rainbow-bridge.html">Rainbow Bridge</a>
+        <a href="about-us.html">About Us</a>
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Support Us</a>
+            <div class="dropdown-content">
+                <a href="Volunteer.html">Volunteer Form</a>
+                <a href="Donate.html">Donate</a>
+            </div>
+        </div>
+        <a href="login.html" class="logout-btn">LOGOUT</a>
+    </nav>
+</header>
+
+<div style="text-align: center; padding: 40px;">
+    <h1 class="tight-spacing header-font" style="font-size: 40px; color: #ffd464; letter-spacing: 3px;">Under Observation</h1>
+    
+    
+    <div id="rescue-grid" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 30px;">
+        <!-- add img-box divs here -->
+    </div>
+</div>
+
+<div id="pet-gallery" class="gallery-grid">
+    <p>Loading rescues...</p> </div>
+
+<div id="petModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span onclick="document.getElementById('petModal').style.display='none'" style="cursor:pointer; float:right;">&times;</span>
+        <div id="modalImg" style="width:40%;"></div> 
+        <div class="pet-details" style="width:60%;">
+            <h2 id="modalName" class="header-font"></h2>
+            <p><strong>Pet ID:</strong> <span id="modalId"></span></p>
+            <p><strong>Species:</strong> <span id="modalSpecies"></span></p>
+            <p><strong>Breed:</strong> <span id="modalBreed"></span></p>
+            <p><strong>Sex:</strong> <span id="modalSex"></span></p>
+            <p><strong>Spayed/Neutered:</strong> <span id="modalFixed"></span></p>
+            <p><strong>Found (Location):</strong> <span id="modalLocation"></span></p>
+            <p><strong>Found (Age):</strong> <span id="modalAge"></span></p>
+            <p><strong>Current Health Status:</strong> <span id="modalHealth"></span></p>
+            <p><strong>Veterinary Clinics:</strong> <span id="modalClinic"></span></p>
+            <a href="adoption-form.html"><button>Adoption Form</button></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal(name, species, id, imgSrc, breed, sex, fixed, location, age, health, clinic) {
+        document.getElementById('modalName').innerText = name;
+        document.getElementById('modalSpecies').innerText = species;
+        document.getElementById('modalId').innerText = id;
+        document.getElementById('modalBreed').innerText = breed;
+        document.getElementById('modalSex').innerText = sex;
+        document.getElementById('modalFixed').innerText = fixed;
+        document.getElementById('modalLocation').innerText = location;
+        document.getElementById('modalAge').innerText = age;
+        document.getElementById('modalHealth').innerText = health;
+        document.getElementById('modalClinic').innerText = clinic;
+        document.getElementById('modalImg').innerHTML = '<img src="' + imgSrc + '" alt="' + name + '">';
+        document.getElementById('petModal').style.display = 'block';
+    }
+</script>
+<script>
+    window.onload = () => loadCategoryGallery('Under Observation');
+</script>
+
+</body>
+</html>

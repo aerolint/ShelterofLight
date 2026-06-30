@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        body { background-color: #000; color: #fff; font-family: sans-serif; }
+        .admin-nav { background: transparent; padding: 15px; display: flex; justify-content: space-around; align-items: center; }
+        .admin-nav a { color: #000; text-decoration: none; font-weight: bold; }
+        .admin-nav a:hover { color: purple; }
+        .header-font { font-family: 'Alfa Slab One', cursive; text-align: center; }
+        .panel { background-color: #1a1a1a; border: 1px solid #fff; border-radius: 15px; padding: 20px; color: #fff; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; color: #fff; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #444; }
+        table img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
+        
+        .controls { padding: 20px; display: flex; gap: 10px; justify-content: center; }
+        
+        .form-layout { display: flex; gap: 40px; margin-top: 20px; }
+        .upload-container { width: 250px; height: 300px; border: 2px dashed #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; text-align: center; }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; flex-grow: 1; }
+        input[type="text"] { padding: 8px; border-radius: 5px; border: 1px solid #444; background: #333; color: #fff; }
+        
+        .yellow-btn { background: #ffd464; color: #000; font-weight: bold; padding: 10px 20px; border: none; cursor: pointer; }
+       
+        .logout-btn { border: 1px solid #000; border-radius: 20px; transition: 0.3s; padding: 8px 20px; }
+
+        .logout-btn:hover { background-color: #fff; color: #000 !important; }
+    </style>
+</head>
+
+<script src="../script.js"></script>
+
+<body>
+
+<header>
+    <div class="retro-header">SHELTER OF LIGHT</div>
+    <nav class="admin-nav">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="rescues.html">Rescues</a>
+        <a href="medical.html">Medical Records</a>
+        <a href="donations.html">Donations</a>
+        <a href="applications.html">Applications</a>
+    </div>
+        <a href="login-admin.html" class="logout-btn">LOGOUT</a>
+    </nav>
+</header>
+
+<div class="header-font" style="margin-top: 40px;">
+    <h3 style="font-size: 25px; margin: 0; color: #ffd464;">RESCUES</h3>
+    <h1 style="font-size: 50px; margin: 0; color: #ffd464 !important; font-family: 'Alfa Slab One', cursive;">Manage</h1>
+</div>
+
+<div class="controls">
+    <button onclick="toggleEdit()">EDIT</button>
+    <button onclick="document.getElementById('rescueForm').style.display='block'">ADD NEW RESCUE</button>
+    <input type="text" placeholder="Search by Pet Name or Clinic...">
+</div>
+
+<div class="panel">
+    <table id="rescueTable">
+        <thead>
+            <tr>
+                <th>Pet ID</th><th>Name</th><th>Species</th><th>Breed</th><th>Sex</th>
+                <th>Spayed/Neutered</th><th>Found (Location)</th><th>Found (Age)</th>
+                <th>Found (Condition)</th><th>Health Status</th><th>Veterinary Clinics</th><th>Photo</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            </tbody>
+    </table>
+</div>
+
+<div id="rescueForm" class="panel" style="display: none;">
+    <div class="form-layout">
+        <label class="upload-container">
+            UPLOAD PHOTO
+            <input type="file" id="photoInput" style="display:none;" accept="image/*">
+        </label>
+        
+        <div class="input-grid">
+            <input type="text" id="fId" placeholder="Pet ID">
+            <input type="text" id="fName" placeholder="Name">
+            <input type="text" id="fSpecies" placeholder="Species">
+            <input type="text" id="fBreed" placeholder="Breed">
+            <input type="text" id="fSex" placeholder="Sex">
+            <input type="text" id="fSpayed" placeholder="Spayed/Neutered">
+            <input type="text" id="fLoc" placeholder="Found (Location)">
+            <input type="text" id="fAge" placeholder="Found (Age)">
+            <input type="text" id="fCond" placeholder="Found (Condition)">
+            <input type="text" id="fHealth" placeholder="Health Status">
+            <input type="text" id="fClinic" placeholder="Veterinary Clinics">
+            <input type="text" id="fPhoto" placeholder="...assets/images/luna.jpg">
+        </div>
+    </div>
+    <button class="yellow-btn" style="margin-top:20px;" onclick="addRescue()">Commit Log to Central Database</button>
+</div>
+
+<script>
+    function toggleEdit() {
+        const table = document.getElementById("rescueTable");
+        table.contentEditable = table.contentEditable === "true" ? "false" : "true";
+    }
+
+    function addRescue() {
+        const tableBody = document.getElementById("tableBody");
+        const newRow = tableBody.insertRow();
+        const fields = ['fId', 'fName', 'fSpecies', 'fBreed', 'fSex', 'fSpayed', 'fLoc', 'fAge', 'fCond', 'fHealth', 'fClinic'];
+        
+        fields.forEach(id => {
+            const cell = newRow.insertCell();
+            cell.textContent = document.getElementById(id).value;
+        });
+
+        const photoCell = newRow.insertCell();
+        const fileInput = document.getElementById('photoInput');
+        const photoPath = document.getElementById('fPhoto').value;
+        
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                photoCell.appendChild(img);
+            }
+            reader.readAsDataURL(fileInput.files[0]);
+        } else if (photoPath.trim() !== "") {
+            const img = document.createElement('img');
+            img.src = photoPath; 
+            photoCell.appendChild(img);
+        }
+        
+        document.getElementById('rescueForm').style.display = 'none';
+        
+        // Clear all fields for the next entry
+        fields.forEach(id => document.getElementById(id).value = "");
+        document.getElementById('fPhoto').value = "";
+        fileInput.value = ""; 
+    }
+</script>
+
+</body>
+</html>

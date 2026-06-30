@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<script src="../script.js"></script>
+
+<body>
+
+<header>
+    <div class="retro-header">SHELTER OF LIGHT</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="first-rescue.html" class="dropbtn">Rescues</a>
+            <div class="dropdown-content">
+                <a href="first-rescue.html">First Rescues</a>
+                <a href="newly-admitted.html">Newly Admitted</a>
+                <a href="under-treatment.html">Under Treatment</a>
+                <a href="under-observation.html">Under Observation</a>
+                <a href="special-needs.html">Special Needs (Permanent)</a>
+                <a href="looking-for-foster.html">Looking for Foster</a>
+                <a href="adopted.html">Adopted</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Adoption</a>
+            <div class="dropdown-content">
+                <a href="adoption-tracker.html">Adoption Tracker</a>
+                <a href="adoption-form.html">Adoption Form</a>
+            </div>
+        </div>
+        <a href="rainbow-bridge.html">Rainbow Bridge</a>
+        <a href="about-us.html">About Us</a>
+
+         <div class="dropdown">
+            <a href="#" class="dropbtn">Support Us</a>
+            <div class="dropdown-content">
+                <a href="Volunteer.html">Volunteer Form</a>
+                <a href="Donate.html">Donate</a>
+            </div>
+           
+            <a href="login.html" class="logout-btn">LOGOUT</a>
+    </nav>
+</header>
+
+<div class="adoption-form-container" style="display: flex; justify-content: center; padding-top: 100px;">
+    
+    <div id="tracker-form" class="adoption-form-box" style="width: 100%; max-width: 500px;">
+        <h2 style="text-align: center; font-weight: bold; font-size: 36px; margin-bottom: 25px; margin-top: 0;">
+            ADOPTION<br>Tracker Inquiry
+        </h2>
+        
+        <p style="text-align: center; margin-bottom: 20px;">
+            Enter the tracking details sent to your email after submitting your form.
+        </p>
+
+        <form onsubmit="showTrackerResults(event)">
+            <label>Applicant Email Address</label>
+            <input type="email" name="email" required>
+
+            <label>Unique Tracker Code</label>
+            <input type="text" name="tracker-code" required>
+
+            <button type="submit" style="background-color: #FFD700; color: #000; font-weight: bold; width: 100%; margin-top: 20px; border: none; padding: 10px; cursor: pointer;">
+                TRACK APPLICATION
+            </button>
+        </form>
+    </div>
+
+    <div id="tracker-results" class="adoption-form-box" style="width: 100%; max-width: 500px; display: none;">
+        <h2 style="text-align: center; font-weight: bold; font-size: 36px; margin-bottom: 25px; margin-top: 0;">
+            ADOPTION<br>Tracker Inquiry
+        </h2>
+        <p><strong>Application ID:</strong><br></p>
+        <p><strong>Target Rescue Name:</strong><br></p>
+        <p><strong>Date Submitted:</strong><br></p>
+        <p><strong>Application Status:</strong><br>Under Review</p>
+    </div>
+
+</div>
+
+<script>
+    function showTrackerResults(event) {
+        event.preventDefault();
+        document.getElementById('tracker-form').style.display = 'none';
+        document.getElementById('tracker-results').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

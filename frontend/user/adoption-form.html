@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<script src="../script.js"></script>
+
+<body>
+
+<header>
+    <div class="retro-header">SHELTER OF LIGHT</div>
+    <nav>
+        <a href="index.html">Home</a>
+        
+        <div class="dropdown">
+            <a href="first-rescue.html" class="dropbtn">Rescues</a>
+            <div class="dropdown-content">
+                <a href="first-rescue.html">First Rescues</a>
+                <a href="newly-admitted.html">Newly Admitted</a>
+                <a href="under-treatment.html">Under Treatment</a>
+                <a href="under-observation.html">Under Observation</a>
+                <a href="special-needs.html">Special Needs (Permanent)</a>
+                <a href="looking-for-foster.html">Looking for Foster</a>
+                <a href="adopted.html">Adopted</a>
+            </div>
+        </div>
+        
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Adoption</a>
+            <div class="dropdown-content">
+                <a href="adoption-tracker.html">Adoption Tracker</a>
+                <a href="adoption-form.html">Adoption Form</a>
+            </div>
+        </div>
+        
+        <a href="rainbow-bridge.html">Rainbow Bridge</a>
+        <a href="about-us.html">About Us</a>
+        
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Support Us</a>
+            <div class="dropdown-content">
+                <a href="Volunteer.html">Volunteer Form</a>
+                <a href="Donate.html">Donate</a>
+            </div>
+        </div>
+        
+        <a href="login.html" class="logout-btn">LOGOUT</a>
+    </nav>
+</header>
+
+<div class="adoption-form-container">
+    <div class="pet-info">
+        <h3>ADOPT ME</h3>
+        <p>Name</p>
+        <div class="placeholder-box"></div> 
+        <p>Pet ID</p>
+    </div>
+
+    <div id="form-container" class="adoption-form-box">
+        <form onsubmit="handleFormSubmission(event)">
+            <h2 style="text-align: center; font-weight: bold;">ADOPTION FORM</h2>
+            
+            <label>Pet ID</label>
+            <input type="text" name="Pet_ID" required>
+
+            <div style="display: flex; gap: 10px;">
+                <div style="flex: 1;">
+                    <label>First Name</label>
+                    <input type="text" name="First_Name" required>
+                </div>
+                <div style="flex: 1;">
+                    <label>Last Name</label>
+                    <input type="text" name="Last_Name" required>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <div style="flex: 1;">
+                    <label>Street</label>
+                    <input type="text" name="Street" required>
+                </div>
+                <div style="flex: 1;">
+                    <label>Barangay</label>
+                    <input type="text" name="Barangay" required>
+                </div>
+                <div style="flex: 1;">
+                    <label>City</label>
+                    <input type="text" name="City" required>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <div style="flex: 1;">
+                    <label>Email Address</label>
+                    <input type="email" name="Email" required>
+                </div>
+                <div style="flex: 1;">
+                    <label>Phone Number</label>
+                    <input type="tel" name="Phone_Number" pattern="\d{10}" maxlength="10" title="Please enter exactly 10 digits" placeholder="e.g. 9171234567" required>
+                </div>
+            </div>
+
+            <label>Preferred Interview Date</label>
+            <input type="date" name="Interview_Date" required>
+
+            <label>Preferred Interview Time</label>
+            <input type="time" name="Interview_Time" required>
+
+            <label>Motivation for Adopting</label>
+            <textarea name="Motivation" rows="4" required></textarea>
+
+            <button type="submit">SUBMIT APPLICATION</button>
+        </form>
+    </div>
+
+    <div id="confirmation-message" class="adoption-form-box" style="display: none; text-align: center;">
+        <h2>APPLICATION SUBMITTED</h2>
+        <p><strong>REFERENCE ID: <span id="ref-id-display">PENDING...</span></strong></p>
+        <p>Thank you for filling out the form! A copy of all your answers, along with your reference code, has been sent to your email.</p>
+    </div>
+</div>
+
+<script>
+    function handleFormSubmission(event) {
+        event.preventDefault(); 
+        
+     
+        const backendGeneratedId = "REF-" + Math.floor(100000 + Math.random() * 900000);
+        
+        document.getElementById('ref-id-display').innerText = backendGeneratedId;
+        
+        document.getElementById('form-container').style.display = 'none';
+        document.getElementById('confirmation-message').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

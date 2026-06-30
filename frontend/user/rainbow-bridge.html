@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; }
+
+        .container { text-align: center; padding: 40px; }
+        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; justify-items: center; margin-top: 40px; }
+
+        .pet-card { width: 200px; display: flex; flex-direction: column; align-items: center; }
+        .img-box { width: 200px; height: 200px; background-color: #999; border: 1px solid #fff; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .pet-info { text-align: left; width: 100%; font-size: 14px; line-height: 1.5; }
+        .header-font { font-family: 'Alfa Slab One', cursive !important; }
+        .tight-spacing { margin: 0 !important; padding: 0 !important; }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="retro-header">SHELTER OF LIGHT</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="first-rescue.html" class="dropbtn">Rescues</a>
+            <div class="dropdown-content">
+                <a href="first-rescue.html">First Rescues</a>
+                <a href="newly-admitted.html">Newly Admitted</a>
+                <a href="under-treatment.html">Under Treatment</a>
+                <a href="under-observation.html">Under Observation</a>
+                <a href="special-needs.html">Special Needs (Permanent)</a>
+                <a href="looking-for-foster.html">Looking for Foster</a>
+                <a href="adopted.html">Adopted</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Adoption</a>
+            <div class="dropdown-content">
+                <a href="adoption-tracker.html">Adoption Tracker</a>
+                <a href="adoption-form.html">Adoption Form</a>
+            </div>
+        </div>
+        <a href="rainbow-bridge.html">Rainbow Bridge</a>
+        <a href="about-us.html">About Us</a>
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Support Us</a>
+            <div class="dropdown-content">
+                <a href="Volunteer.html">Volunteer Form</a>
+                <a href="Donate.html">Donate</a>
+            </div>
+        </div>
+        <a href="login.html" class="logout-btn">LOGOUT</a>
+    </nav>
+</header>
+
+<div class="container">
+   <h3 class="tight-spacing" style="font-size: 25px;">ALWAYS WITH US</h3>
+    <h1 class="tight-spacing header-font" style="font-size: 50px; color: #ffd464;">Rainbow Bridge</h1>
+
+    <div id="rainbow-grid" class="grid"></div>
+</div>
+
+<script src="../script.js"></script>
+<script>
+
+
+
+</script>
+
+</body>
+</html>
