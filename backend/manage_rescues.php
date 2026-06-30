@@ -3,7 +3,6 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Access-Control-Allow-Credentials: true");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -26,6 +25,12 @@ define('UPLOAD_DIR_RESCUES', __DIR__ . '/uploads/rescues/');
 define('UPLOAD_URI_RESCUES', '/uploads/rescues/');
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5 MB
 $allowed_mime = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
+// Single source of truth for valid Rescues.Status ENUM values.
+const RESCUE_STATUSES = [
+    'Newly Admitted', 'Under Treatment', 'Under Observation',
+    'Special Needs', 'Looking for Foster', 'Adopted', 'Rainbow Bridge'
+];
 
 switch (true) {
     case $method === 'GET' && $action === 'list':
@@ -146,16 +151,11 @@ function rescue_create(PDO $pdo): void
     $status        = trim($_POST['status']  ?? 'Newly Admitted');
     $memorial_note = trim($_POST['memorial_note'] ?? '');
 
-    $allowed_statuses = [
-        'Newly Admitted', 'Under Treatment', 'Under Observation',
-        'Special Needs', 'Looking for Foster', 'Adopted', 'Rainbow Bridge'
-    ];
-
     if (empty($name)) {
         echo json_encode(['success' => false, 'message' => 'Rescue name is required.']);
         return;
     }
-    if (!in_array($status, $allowed_statuses, true)) {
+    if (!in_array($status, RESCUE_STATUSES, true)) {
         echo json_encode(['success' => false, 'message' => 'Invalid status value.']);
         return;
     }
@@ -206,6 +206,12 @@ function rescue_update(PDO $pdo): void
         echo json_encode(['success' => false, 'message' => 'Rescue ID and name are required.']);
         return;
     }
+    // Status is NOT NULL in the schema, so it must be a valid ENUM value —
+    // never write NULL, which would raise an integrity-constraint error.
+    if (!in_array($status, RESCUE_STATUSES, true)) {
+        echo json_encode(['success' => false, 'message' => 'Invalid or missing status value.']);
+        return;
+    }
 
     $photo_path = null;
     if (!empty($_FILES['photo']['name'])) {
@@ -221,7 +227,7 @@ function rescue_update(PDO $pdo): void
         'name'          => $name,
         'species'       => $species       ?: null,
         'breed'         => $breed         ?: null,
-        'status'        => $status        ?: null,
+        'status'        => $status,
         'memorial_note' => $memorial_note ?: null,
     ];
 
@@ -257,12 +263,7 @@ function rescue_update_status(PDO $pdo): void
     $status        = trim($_POST['status']          ?? '');
     $memorial_note = trim($_POST['memorial_note']   ?? '');
 
-    $allowed = [
-        'Newly Admitted', 'Under Treatment', 'Under Observation',
-        'Special Needs', 'Looking for Foster', 'Adopted', 'Rainbow Bridge'
-    ];
-
-    if ($rescue_id <= 0 || !in_array($status, $allowed, true)) {
+    if ($rescue_id <= 0 || !in_array($status, RESCUE_STATUSES, true)) {
         echo json_encode(['success' => false, 'message' => 'Invalid rescue ID or status.']);
         return;
     }

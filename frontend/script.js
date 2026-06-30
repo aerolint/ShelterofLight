@@ -61,6 +61,15 @@ function fd(obj) {
     return f;
 }
 
+// HTML-escape any value before interpolating it into innerHTML / attributes.
+// Pet/applicant fields come from the database (admin-entered) and must not be
+// trusted as markup, or a stored value like "<img onerror=...>" becomes XSS.
+function esc(value) {
+    return String(value ?? '').replace(/[&<>"']/g, ch => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[ch]));
+}
+
 /* ============================================================
    AUTH  (auth.php — POST only)
    ============================================================ */
@@ -343,9 +352,9 @@ async function loadCategoryGallery(categoryName) {
 
     container.innerHTML = currentPets.map((pet, index) => `
         <div class="img-box" onclick="handlePetClick(${index})">
-            <img src="${petImage(pet)}" alt="${pet.Name}" loading="lazy"
+            <img src="${esc(petImage(pet))}" alt="${esc(pet.Name)}" loading="lazy"
                  onerror="this.src='https://via.placeholder.com/220x220/2d2d2d/FFD946?text=No+Image'">
-            <p>${pet.Name}</p>
+            <p>${esc(pet.Name)}</p>
         </div>`).join('');
 }
 
@@ -375,7 +384,7 @@ function openDynamicModal(pet) {
     setText('modalHealth', pet.Current_Health_Status || pet.Status || 'N/A');
     setText('modalClinic', pet.Veterinary_Clinic || 'N/A');
     const img = document.getElementById('modalImg');
-    if (img) img.innerHTML = `<img src="${petImage(pet)}" alt="${pet.Name}" style="width:100%;">`;
+    if (img) img.innerHTML = `<img src="${esc(petImage(pet))}" alt="${esc(pet.Name)}" style="width:100%;">`;
     const modal = document.getElementById('petModal');
     if (modal) modal.style.display = 'block';
 }
@@ -421,15 +430,15 @@ function renderCarousel() {
         slide.className = 'carousel-slide';
         slide.style.display = index === 0 ? 'flex' : 'none';
         slide.innerHTML = `
-            <img src="${petImage(pet)}" alt="${pet.Name || 'Pet'}">
+            <img src="${esc(petImage(pet))}" alt="${esc(pet.Name || 'Pet')}">
             <div class="carousel-slide-content">
-                <h2>${pet.Name || 'Unnamed'}</h2>
+                <h2>${esc(pet.Name || 'Unnamed')}</h2>
                 <div class="pet-details">
-                    <span>🐕 ${pet.Species || 'Pet'}</span>
-                    <span>${pet.Breed || 'Mixed'}</span>
+                    <span>🐕 ${esc(pet.Species || 'Pet')}</span>
+                    <span>${esc(pet.Breed || 'Mixed')}</span>
                 </div>
-                <p>${pet.Status || 'Looking for a loving home!'}</p>
-                <a href="adoption-form.html?pet=${pet.Rescue_ID}" class="btn-adopt">Adopt Me</a>
+                <p>${esc(pet.Status || 'Looking for a loving home!')}</p>
+                <a href="adoption-form.html?pet=${encodeURIComponent(pet.Rescue_ID)}" class="btn-adopt">Adopt Me</a>
             </div>`;
         slidesContainer.appendChild(slide);
 
@@ -562,20 +571,20 @@ function createPetCard(pet) {
     card.style.cssText = 'background:#1a1a1a;border-radius:16px;overflow:hidden;border:1px solid rgba(255,217,70,0.08);transition:transform 0.3s ease,box-shadow 0.3s ease;flex:1;min-width:250px;max-width:350px;';
     const statusColor = pet.Status === 'Special Needs' ? '#dc3545' : '#17a2b8';
     card.innerHTML = `
-        <img src="${petImage(pet)}" alt="${pet.Name}" style="width:100%;height:220px;object-fit:cover;background:#2d2d2d;"
+        <img src="${esc(petImage(pet))}" alt="${esc(pet.Name)}" style="width:100%;height:220px;object-fit:cover;background:#2d2d2d;"
              onerror="this.src='https://via.placeholder.com/400x300/2d2d2d/FFD946?text=No+Image'">
         <div style="padding:18px 20px 20px;">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-                <h3 style="color:#FFD946;font-size:22px;font-weight:700;margin:0;">${pet.Name || 'Unnamed'}</h3>
-                <span style="display:inline-block;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;background:${statusColor};color:#fff;">${pet.Status || 'Available'}</span>
+                <h3 style="color:#FFD946;font-size:22px;font-weight:700;margin:0;">${esc(pet.Name || 'Unnamed')}</h3>
+                <span style="display:inline-block;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;background:${statusColor};color:#fff;">${esc(pet.Status || 'Available')}</span>
             </div>
             <div style="display:flex;gap:12px;flex-wrap:wrap;margin:8px 0 10px;">
-                <span style="background:rgba(255,255,255,0.06);padding:3px 14px;border-radius:12px;font-size:13px;color:#ccc;">🐕 ${pet.Species || 'Pet'}</span>
-                <span style="background:rgba(255,255,255,0.06);padding:3px 14px;border-radius:12px;font-size:13px;color:#ccc;">${pet.Breed || 'Mixed'}</span>
+                <span style="background:rgba(255,255,255,0.06);padding:3px 14px;border-radius:12px;font-size:13px;color:#ccc;">🐕 ${esc(pet.Species || 'Pet')}</span>
+                <span style="background:rgba(255,255,255,0.06);padding:3px 14px;border-radius:12px;font-size:13px;color:#ccc;">${esc(pet.Breed || 'Mixed')}</span>
             </div>
             <div style="display:flex;gap:10px;">
-                <a href="adoption-form.html?pet=${pet.Rescue_ID}" style="flex:1;text-align:center;background:#FFD946;color:#000;padding:10px 20px;border-radius:25px;text-decoration:none;font-weight:700;font-size:14px;">Adopt Me</a>
-                <button onclick='openDynamicModal(${JSON.stringify(pet).replace(/'/g, "&#39;")})' style="background:transparent;color:#FFD946;border:1px solid #FFD946;padding:10px 18px;border-radius:25px;font-weight:600;font-size:14px;cursor:pointer;">Details</button>
+                <a href="adoption-form.html?pet=${encodeURIComponent(pet.Rescue_ID)}" style="flex:1;text-align:center;background:#FFD946;color:#000;padding:10px 20px;border-radius:25px;text-decoration:none;font-weight:700;font-size:14px;">Adopt Me</a>
+                <button onclick='openDynamicModal(${esc(JSON.stringify(pet))})' style="background:transparent;color:#FFD946;border:1px solid #FFD946;padding:10px 18px;border-radius:25px;font-weight:600;font-size:14px;cursor:pointer;">Details</button>
             </div>
         </div>`;
     return card;
