@@ -123,16 +123,39 @@
 </div>
 
 <script>
-    function handleFormSubmission(event) {
-        event.preventDefault(); 
-        
-     
-        const backendGeneratedId = "REF-" + Math.floor(100000 + Math.random() * 900000);
-        
-        document.getElementById('ref-id-display').innerText = backendGeneratedId;
-        
-        document.getElementById('form-container').style.display = 'none';
-        document.getElementById('confirmation-message').style.display = 'block';
+    // Prefill Pet ID from a ?pet=<id> link (e.g. the "Adopt Me" buttons).
+    document.addEventListener('DOMContentLoaded', () => {
+        const petId = new URLSearchParams(window.location.search).get('pet');
+        if (petId) document.querySelector('input[name="Pet_ID"]').value = petId;
+    });
+
+    // NOTE: the backend stores rescue_id, applicant name/email and motivation.
+    // Address and interview date/time are collected for the shelter's reference
+    // but are appended into the motivation text since there are no columns for them.
+    async function handleFormSubmission(event) {
+        event.preventDefault();
+        const form = event.target;
+        const fullName = (form.First_Name.value.trim() + ' ' + form.Last_Name.value.trim()).trim();
+        const extra =
+            `\n\n--- Applicant details ---\n` +
+            `Address: ${form.Street.value}, ${form.Barangay.value}, ${form.City.value}\n` +
+            `Phone: ${form.Phone_Number.value}\n` +
+            `Preferred interview: ${form.Interview_Date.value} ${form.Interview_Time.value}`;
+
+        const result = await submitAdoption({
+            rescue_id: form.Pet_ID.value.trim(),
+            applicant_name: fullName,
+            applicant_email: form.Email.value.trim(),
+            motivation: form.Motivation.value.trim() + extra,
+        });
+
+        if (result.success) {
+            document.getElementById('ref-id-display').innerText = result.tracker_code || '—';
+            document.getElementById('form-container').style.display = 'none';
+            document.getElementById('confirmation-message').style.display = 'block';
+        } else {
+            showNotification(apiErrorText(result), 'error');
+        }
     }
 </script>
 

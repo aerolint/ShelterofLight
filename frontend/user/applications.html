@@ -43,20 +43,63 @@
     <h1 style="font-size: 50px; margin: 0; color: #ffd464 !important; font-family: 'Alfa Slab One', cursive;">Applications</h1>
 </div>
 
-<table id="appTable" contenteditable="true">
+<table id="appTable">
     <thead>
         <tr>
             <th>Application ID</th><th>Date Submitted</th><th>Applicant Name</th>
-            <th>Target Rescue Name</th><th>Unique Tracker</th><th>Action (Photo)</th><th>Status</th>
+            <th>Target Rescue Name</th><th>Unique Tracker</th><th>Status</th><th>Action</th>
         </tr>
     </thead>
-    <tbody>
-        <tr>
-            <td></td><td></td><td></td><td></td><td></td>
-            <td><div class="photo-box"></div></td><td></td>
-        </tr>
+    <tbody id="appBody">
+        <tr><td colspan="7">Loading...</td></tr>
     </tbody>
 </table>
+
+<script>
+    const APP_STATUSES = ['Under Review', 'For Interview', 'Approved', 'On Hold'];
+
+    async function loadApplications() {
+        const result = await getAdoptions();
+        const body = document.getElementById('appBody');
+        if (!result.success) {
+            body.innerHTML = `<tr><td colspan="7">${apiErrorText(result)}</td></tr>`;
+            if (/log in/i.test(result.message || '')) setTimeout(() => window.location.href = 'login-admin.html', 1200);
+            return;
+        }
+        if (!result.data.length) {
+            body.innerHTML = `<tr><td colspan="7">No applications yet.</td></tr>`;
+            return;
+        }
+        body.innerHTML = result.data.map(a => `
+            <tr>
+                <td>${a.Application_ID}</td>
+                <td>${a.Submitted_At}</td>
+                <td>${a.Applicant_Name}</td>
+                <td>${a.RescueName}</td>
+                <td>${a.Tracker_Code}</td>
+                <td>
+                    <select onchange="changeAppStatus(${a.Application_ID}, this.value)">
+                        ${APP_STATUSES.map(s => `<option ${s === a.Status ? 'selected' : ''}>${s}</option>`).join('')}
+                    </select>
+                </td>
+                <td><button onclick="removeApp(${a.Application_ID})">Delete</button></td>
+            </tr>`).join('');
+    }
+
+    async function changeAppStatus(id, status) {
+        const r = await updateAdoptionStatus(id, status);
+        showNotification(r.success ? r.message : apiErrorText(r), r.success ? 'success' : 'error');
+    }
+
+    async function removeApp(id) {
+        if (!confirm('Delete application #' + id + '?')) return;
+        const r = await deleteAdoption(id);
+        showNotification(r.success ? r.message : apiErrorText(r), r.success ? 'success' : 'error');
+        if (r.success) loadApplications();
+    }
+
+    document.addEventListener('DOMContentLoaded', loadApplications);
+</script>
 
 </body>
 </html>

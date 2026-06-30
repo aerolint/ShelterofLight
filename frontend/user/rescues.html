@@ -61,13 +61,13 @@
     <table id="rescueTable">
         <thead>
             <tr>
-                <th>Pet ID</th><th>Name</th><th>Species</th><th>Breed</th><th>Sex</th>
-                <th>Spayed/Neutered</th><th>Found (Location)</th><th>Found (Age)</th>
-                <th>Found (Condition)</th><th>Health Status</th><th>Veterinary Clinics</th><th>Photo</th>
+                <th>Pet ID</th><th>Name</th><th>Species</th><th>Breed</th>
+                <th>Status</th><th>Photo</th><th>Action</th>
             </tr>
         </thead>
         <tbody id="tableBody">
-            </tbody>
+            <tr><td colspan="7">Loading...</td></tr>
+        </tbody>
     </table>
 </div>
 
@@ -79,64 +79,100 @@
         </label>
         
         <div class="input-grid">
-            <input type="text" id="fId" placeholder="Pet ID">
-            <input type="text" id="fName" placeholder="Name">
+            <input type="text" id="fName" placeholder="Name (required)">
             <input type="text" id="fSpecies" placeholder="Species">
             <input type="text" id="fBreed" placeholder="Breed">
-            <input type="text" id="fSex" placeholder="Sex">
-            <input type="text" id="fSpayed" placeholder="Spayed/Neutered">
-            <input type="text" id="fLoc" placeholder="Found (Location)">
-            <input type="text" id="fAge" placeholder="Found (Age)">
-            <input type="text" id="fCond" placeholder="Found (Condition)">
-            <input type="text" id="fHealth" placeholder="Health Status">
-            <input type="text" id="fClinic" placeholder="Veterinary Clinics">
-            <input type="text" id="fPhoto" placeholder="...assets/images/luna.jpg">
+            <select id="fStatus">
+                <option>Newly Admitted</option>
+                <option>Under Treatment</option>
+                <option>Under Observation</option>
+                <option>Special Needs</option>
+                <option>Looking for Foster</option>
+                <option>Adopted</option>
+                <option>Rainbow Bridge</option>
+            </select>
         </div>
     </div>
+    <p style="color:#888;font-size:12px;margin-top:10px;">
+        Note: the database stores Name, Species, Breed, Status and Photo. Other details
+        (Sex, Found location/age, etc.) are not yet stored — add columns to the Rescues
+        table and manage_rescues.php to support them.
+    </p>
     <button class="yellow-btn" style="margin-top:20px;" onclick="addRescue()">Commit Log to Central Database</button>
 </div>
 
 <script>
+    const STATUSES = ['Newly Admitted', 'Under Treatment', 'Under Observation',
+        'Special Needs', 'Looking for Foster', 'Adopted', 'Rainbow Bridge'];
+
     function toggleEdit() {
-        const table = document.getElementById("rescueTable");
-        table.contentEditable = table.contentEditable === "true" ? "false" : "true";
+        document.getElementById('rescueForm').style.display = 'block';
     }
 
-    function addRescue() {
-        const tableBody = document.getElementById("tableBody");
-        const newRow = tableBody.insertRow();
-        const fields = ['fId', 'fName', 'fSpecies', 'fBreed', 'fSex', 'fSpayed', 'fLoc', 'fAge', 'fCond', 'fHealth', 'fClinic'];
-        
-        fields.forEach(id => {
-            const cell = newRow.insertCell();
-            cell.textContent = document.getElementById(id).value;
-        });
-
-        const photoCell = newRow.insertCell();
-        const fileInput = document.getElementById('photoInput');
-        const photoPath = document.getElementById('fPhoto').value;
-        
-        if (fileInput.files && fileInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                photoCell.appendChild(img);
-            }
-            reader.readAsDataURL(fileInput.files[0]);
-        } else if (photoPath.trim() !== "") {
-            const img = document.createElement('img');
-            img.src = photoPath; 
-            photoCell.appendChild(img);
+    async function loadRescues() {
+        const result = await getAllAnimals();
+        const body = document.getElementById('tableBody');
+        if (!result.success) {
+            body.innerHTML = `<tr><td colspan="7">${apiErrorText(result)}</td></tr>`;
+            return;
         }
-        
-        document.getElementById('rescueForm').style.display = 'none';
-        
-        // Clear all fields for the next entry
-        fields.forEach(id => document.getElementById(id).value = "");
-        document.getElementById('fPhoto').value = "";
-        fileInput.value = ""; 
+        if (!result.data.length) {
+            body.innerHTML = `<tr><td colspan="7">No rescues yet. Add one above.</td></tr>`;
+            return;
+        }
+        body.innerHTML = result.data.map(r => {
+            const img = r.Photo_Path
+                ? `<img src="../../backend${r.Photo_Path}" alt="${r.Name}">`
+                : '—';
+            const options = STATUSES.map(s => `<option ${s === r.Status ? 'selected' : ''}>${s}</option>`).join('');
+            return `
+            <tr>
+                <td>${r.Rescue_ID}</td>
+                <td>${r.Name}</td>
+                <td>${r.Species || '—'}</td>
+                <td>${r.Breed || '—'}</td>
+                <td><select onchange="changeStatus(${r.Rescue_ID}, this.value)">${options}</select></td>
+                <td>${img}</td>
+                <td><button onclick="removeRescue(${r.Rescue_ID})">Delete</button></td>
+            </tr>`;
+        }).join('');
     }
+
+    async function addRescue() {
+        const name = document.getElementById('fName').value.trim();
+        if (!name) { showNotification('Name is required.', 'warning'); return; }
+        const fileInput = document.getElementById('photoInput');
+        const result = await addAnimal({
+            name,
+            species: document.getElementById('fSpecies').value.trim(),
+            breed: document.getElementById('fBreed').value.trim(),
+            status: document.getElementById('fStatus').value,
+            photo: (fileInput.files && fileInput.files[0]) ? fileInput.files[0] : null,
+        });
+        if (result.success) {
+            showNotification(result.message || 'Rescue added.', 'success');
+            document.getElementById('rescueForm').style.display = 'none';
+            ['fName', 'fSpecies', 'fBreed'].forEach(id => document.getElementById(id).value = '');
+            fileInput.value = '';
+            loadRescues();
+        } else {
+            showNotification(apiErrorText(result), 'error');
+        }
+    }
+
+    async function changeStatus(id, status) {
+        const r = await updateAnimalStatus(id, status);
+        showNotification(r.success ? r.message : apiErrorText(r), r.success ? 'success' : 'error');
+    }
+
+    async function removeRescue(id) {
+        if (!confirm('Delete rescue #' + id + '? This also removes its medical records and applications.')) return;
+        const r = await deleteAnimal(id);
+        showNotification(r.success ? r.message : apiErrorText(r), r.success ? 'success' : 'error');
+        if (r.success) loadRescues();
+    }
+
+    document.addEventListener('DOMContentLoaded', loadRescues);
 </script>
 
 </body>

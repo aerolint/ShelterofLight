@@ -86,18 +86,69 @@
 </div>
 
 <script>
-    function addMedicalRecord() {
-        const tableBody = document.getElementById("medicalBody");
-        const newRow = tableBody.insertRow();
-        
-        newRow.insertCell(0).textContent = document.getElementById('mDate').value;
-        newRow.insertCell(1).textContent = document.getElementById('mPetId').value;
-        newRow.insertCell(2).textContent = document.getElementById('mResident').value;
-        newRow.insertCell(3).textContent = document.getElementById('mClinic').value;
-        newRow.insertCell(4).textContent = document.getElementById('mDiagnosis').value;
-        
-        newRow.contentEditable = "true";
+    async function initMedical() {
+        const [residents, clinics] = await Promise.all([getRescueDropdown(), getClinics()]);
+
+        if (residents.success) {
+            const sel = document.getElementById('mResident');
+            residents.data.forEach(r => {
+                const o = document.createElement('option');
+                o.value = r.Rescue_ID;
+                o.textContent = `${r.Name} (${r.Species || 'N/A'})`;
+                sel.appendChild(o);
+            });
+        }
+        if (clinics.success) {
+            const sel = document.getElementById('mClinic');
+            sel.innerHTML = '<option value="">Select a clinic...</option>';
+            clinics.data.forEach(c => {
+                const o = document.createElement('option');
+                o.value = c.Clinic_ID;
+                o.textContent = c.Veterinarian ? `${c.Clinic_Name} — ${c.Veterinarian}` : c.Clinic_Name;
+                sel.appendChild(o);
+            });
+        }
+        loadMedicalRecords();
     }
+
+    async function loadMedicalRecords() {
+        const result = await getAllMedicalRecords();
+        const body = document.getElementById('medicalBody');
+        if (!result.success) {
+            body.innerHTML = `<tr><td colspan="5">${apiErrorText(result)}</td></tr>`;
+            if (/log in/i.test(result.message || '')) setTimeout(() => window.location.href = 'login-admin.html', 1200);
+            return;
+        }
+        body.innerHTML = result.data.length
+            ? result.data.map(r => `
+                <tr>
+                    <td>${r.Treatment_Date}</td>
+                    <td>${r.Rescue_ID}</td>
+                    <td>${r.RescueName}</td>
+                    <td>${r.Clinic_Name || '—'}</td>
+                    <td>${r.Diagnosis || ''}</td>
+                </tr>`).join('')
+            : `<tr><td colspan="5">No records yet.</td></tr>`;
+    }
+
+    async function addMedicalRecord() {
+        const rescueId = document.getElementById('mResident').value || document.getElementById('mPetId').value.trim();
+        const result = await addMedicalLog({
+            rescue_id: rescueId,
+            clinic_id: document.getElementById('mClinic').value,
+            treatment_date: document.getElementById('mDate').value,
+            diagnosis: document.getElementById('mDiagnosis').value.trim(),
+        });
+        if (result.success) {
+            showNotification(result.message || 'Record saved.', 'success');
+            document.getElementById('mDiagnosis').value = '';
+            loadMedicalRecords();
+        } else {
+            showNotification(apiErrorText(result), 'error');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', initMedical);
 </script>
 
 </body>
