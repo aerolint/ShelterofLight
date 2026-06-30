@@ -338,8 +338,11 @@ function handle_photo_upload(array $file): array
         return ['success' => false, 'message' => 'Only JPEG, PNG, WEBP, and GIF images are allowed.'];
     }
 
-    $ext      = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $filename = bin2hex(random_bytes(16)) . '.' . strtolower($ext);
+    // Derive the extension from the VALIDATED MIME type, never from the user's
+    // filename — a polyglot named "x.php" must not be stored with a .php extension.
+    $ext_map  = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp', 'image/gif' => 'gif'];
+    $ext      = $ext_map[$mime];
+    $filename = bin2hex(random_bytes(16)) . '.' . $ext;
     $dest     = UPLOAD_DIR_RESCUES . $filename;
 
     if (!move_uploaded_file($file['tmp_name'], $dest)) {
@@ -347,4 +350,4 @@ function handle_photo_upload(array $file): array
     }
 
     return ['success' => true, 'path' => UPLOAD_URI_RESCUES . $filename];
-}
+}

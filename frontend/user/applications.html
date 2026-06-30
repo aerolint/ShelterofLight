@@ -74,10 +74,10 @@
         body.innerHTML = result.data.map(a => `
             <tr>
                 <td>${a.Application_ID}</td>
-                <td>${a.Submitted_At}</td>
-                <td>${a.Applicant_Name}</td>
-                <td>${a.RescueName}</td>
-                <td>${a.Tracker_Code}</td>
+                <td>${esc(a.Submitted_At)}</td>
+                <td>${esc(a.Applicant_Name)}</td>
+                <td>${esc(a.RescueName)}</td>
+                <td>${esc(a.Tracker_Code)}</td>
                 <td>
                     <select onchange="changeAppStatus(${a.Application_ID}, this.value)">
                         ${APP_STATUSES.map(s => `<option ${s === a.Status ? 'selected' : ''}>${s}</option>`).join('')}

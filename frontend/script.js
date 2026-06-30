@@ -649,7 +649,7 @@ Object.assign(window, {
     submitAdoption, getAdoptions, getPendingAdoptions, trackAdoption, updateAdoptionStatus, deleteAdoption,
     getMedicalHistory, getAllMedicalRecords, getClinics, getRescueDropdown, addMedicalLog, deleteMedicalRecord,
     getDashboard,
-    showNotification, validateForm, apiErrorText,
+    showNotification, validateForm, apiErrorText, esc,
     placeholderImage, PLACEHOLDER_IMG,
     loadCategoryGallery, handlePetClick, openDynamicModal,
     loadCarouselPets, changeSlide, goToSlide,

@@ -51,7 +51,7 @@
 
 <div class="dashboard-grid">
     <div class="panel">
-        <h3 style="text-align: center; margin-top: 0;">TOTAL ACTIVE RESCUES</h3>
+        <h3 style="text-align: center; margin-top: 0;">RESCUES BY STATUS</h3>
         <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
             <div id="rescue-pie-chart" class="pie-chart"></div>
             <div id="rescue-legend" style="font-size: 12px; line-height: 1.8; text-align: left;">
@@ -111,11 +111,11 @@
         }
         renderRescueCounts(result.data.rescue_counts || []);
         renderRows('adoption-table-body', result.data.pending_apps || [],
-            a => `<td>${a.Application_ID}</td><td>${a.Status}</td>`);
+            a => `<td>${a.Application_ID}</td><td>${esc(a.Status)}</td>`);
         renderRows('donation-table-body', result.data.pending_donations || [],
-            d => `<td>${d.Reference_Number || '—'}</td><td>${d.Verification_Status}</td>`);
+            d => `<td>${esc(d.Reference_Number || '—')}</td><td>${esc(d.Verification_Status)}</td>`);
         renderRows('volunteer-table-body', result.data.active_volunteers || [],
-            v => `<td>${v.User_ID}</td><td>${v.Full_Name || '—'}</td>`);
+            v => `<td>${v.User_ID}</td><td>${esc(v.Full_Name || '—')}</td>`);
     }
 
     function renderRows(tbodyId, items, rowHtml) {
@@ -143,7 +143,7 @@
         });
         pie.style.background = `conic-gradient(${stops.join(', ')})`;
         legend.innerHTML = counts.map((c, i) =>
-            `<div><span style="display:inline-block;width:10px;height:10px;background:${PIE_COLORS[i % PIE_COLORS.length]};margin-right:6px;"></span>${c.label}: <strong>${c.count}</strong></div>`
+            `<div><span style="display:inline-block;width:10px;height:10px;background:${PIE_COLORS[i % PIE_COLORS.length]};margin-right:6px;"></span>${esc(c.label)}: <strong>${c.count}</strong></div>`
         ).join('');
     }
 

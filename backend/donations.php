@@ -242,8 +242,15 @@ function handle_donation_upload(array $file): array
         return ['success' => false, 'message' => 'Invalid file type. Allowed: JPEG, PNG, WEBP, GIF, PDF.'];
     }
 
-    $ext      = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $filename = 'don_' . bin2hex(random_bytes(12)) . '.' . strtolower($ext);
+    // Derive the extension from the VALIDATED MIME type, never from the user's
+    // filename — otherwise a PNG-polyglot named "x.php" would be stored as .php
+    // and could be executed by the web server.
+    $ext_map = [
+        'image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp',
+        'image/gif'  => 'gif', 'application/pdf' => 'pdf',
+    ];
+    $ext      = $ext_map[$mime];
+    $filename = 'don_' . bin2hex(random_bytes(12)) . '.' . $ext;
     $dest     = UPLOAD_DIR_DONATIONS . $filename;
 
     if (!move_uploaded_file($file['tmp_name'], $dest)) {
@@ -251,4 +258,4 @@ function handle_donation_upload(array $file): array
     }
 
     return ['success' => true, 'path' => UPLOAD_URI_DONATIONS . $filename];
-}
+}

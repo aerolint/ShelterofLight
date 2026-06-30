@@ -42,7 +42,6 @@
         <a href="medical.html">Medical Records</a>
         <a href="donations.html">Donations</a>
         <a href="applications.html">Applications</a>
-    </div>
         <a href="login.html" class="logout-btn">LOGOUT</a>
     </nav>
 </header>
@@ -53,7 +52,6 @@
 </div>
 
 <div class="controls">
-    <button onclick="toggleEdit()">EDIT</button>
     <button onclick="document.getElementById('rescueForm').style.display='block'">ADD NEW RESCUE</button>
     <input type="text" placeholder="Search by Pet Name or Clinic...">
 </div>
@@ -106,10 +104,6 @@
     const STATUSES = ['Newly Admitted', 'Under Treatment', 'Under Observation',
         'Special Needs', 'Looking for Foster', 'Adopted', 'Rainbow Bridge'];
 
-    function toggleEdit() {
-        document.getElementById('rescueForm').style.display = 'block';
-    }
-
     async function loadRescues() {
         const result = await getAllAnimals();
         const body = document.getElementById('tableBody');
@@ -123,15 +117,15 @@
         }
         body.innerHTML = result.data.map(r => {
             const img = r.Photo_Path
-                ? `<img src="../../backend${r.Photo_Path}" alt="${r.Name}">`
+                ? `<img src="../../backend${r.Photo_Path}" alt="${esc(r.Name)}">`
                 : '—';
             const options = STATUSES.map(s => `<option ${s === r.Status ? 'selected' : ''}>${s}</option>`).join('');
             return `
             <tr>
                 <td>${r.Rescue_ID}</td>
-                <td>${r.Name}</td>
-                <td>${r.Species || '—'}</td>
-                <td>${r.Breed || '—'}</td>
+                <td>${esc(r.Name)}</td>
+                <td>${esc(r.Species || '—')}</td>
+                <td>${esc(r.Breed || '—')}</td>
                 <td><select onchange="changeStatus(${r.Rescue_ID}, this.value)">${options}</select></td>
                 <td>${img}</td>
                 <td><button onclick="removeRescue(${r.Rescue_ID})">Delete</button></td>

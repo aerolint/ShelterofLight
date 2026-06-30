@@ -123,11 +123,11 @@
         body.innerHTML = result.data.length
             ? result.data.map(r => `
                 <tr>
-                    <td>${r.Treatment_Date}</td>
+                    <td>${esc(r.Treatment_Date)}</td>
                     <td>${r.Rescue_ID}</td>
-                    <td>${r.RescueName}</td>
-                    <td>${r.Clinic_Name || '—'}</td>
-                    <td>${r.Diagnosis || ''}</td>
+                    <td>${esc(r.RescueName)}</td>
+                    <td>${esc(r.Clinic_Name || '—')}</td>
+                    <td>${esc(r.Diagnosis || '')}</td>
                 </tr>`).join('')
             : `<tr><td colspan="5">No records yet.</td></tr>`;
     }
