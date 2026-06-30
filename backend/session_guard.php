@@ -2,7 +2,6 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Access-Control-Allow-Credentials: true");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -14,7 +13,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params([
         'lifetime' => 0,
         'path'     => '/',
-        'secure'   => isset($_SERVER['HTTPS']),   // HTTPS-only in production
+        // HTTPS-only in production. isset() alone is wrong: some setups send
+        // $_SERVER['HTTPS'] = 'off' on plain HTTP, which would mark the cookie
+        // Secure over HTTP and make the browser drop it (session never sticks).
+        'secure'   => (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
+                      || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https'),
         'httponly' => true,                        // Block JavaScript access
         'samesite' => 'Strict',
     ]);

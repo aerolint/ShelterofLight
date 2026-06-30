@@ -102,7 +102,7 @@ INSERT INTO `Users`
     (`Username`, `Password`, `Role`, `Full_Name`, `Email`)
 VALUES (
     'admin',
-    '$2y$10$RcbqBTEKA7Mh2iFOPdKOoOzrRPnTPEQcEqbRmJpB.VVrdMBTfG8y',
+    '$2y$10$BYhRCke2wZO3xsAu3zI2C.g4Hf0njX7tOQENpzYzf/tGfYWbwoLB6',
     'Admin',
     'Shelter Administrator',
     'admin@shelteroflight.com'
