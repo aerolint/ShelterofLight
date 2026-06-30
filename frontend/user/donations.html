@@ -43,23 +43,70 @@
     <h1 style="font-size: 50px; margin: 0; color: #ffd464 !important; font-family: 'Alfa Slab One', cursive;">Donations</h1>
 </div>
 
-<table id="donationTable" contenteditable="true">
+<table id="donationTable">
     <thead>
         <tr>
             <th>Donation ID</th><th>Sender Name</th><th>Transaction Date</th>
             <th>Amount (PHP)</th><th>Payment Channel</th><th>Reference Number</th>
-            <th>Receipt</th><th>Status</th>
+            <th>Receipt</th><th>Status</th><th>Action</th>
         </tr>
     </thead>
-    <tbody>
-        <tr>
-            <td></td><td></td><td></td><td></td><td></td><td></td>
-            <td><div class="receipt-box"></div></td><td></td>
-        </tr>
+    <tbody id="donationBody">
+        <tr><td colspan="9">Loading...</td></tr>
     </tbody>
 </table>
 
-</div>
+<script>
+    async function loadDonations() {
+        const result = await getAllDonations();
+        const body = document.getElementById('donationBody');
+        if (!result.success) {
+            body.innerHTML = `<tr><td colspan="9">${apiErrorText(result)}</td></tr>`;
+            if (/log in/i.test(result.message || '')) setTimeout(() => window.location.href = 'login-admin.html', 1200);
+            return;
+        }
+        if (!result.data.length) {
+            body.innerHTML = `<tr><td colspan="9">No donations yet.</td></tr>`;
+            return;
+        }
+        body.innerHTML = result.data.map(d => {
+            const verified = d.Verification_Status === 'Verified';
+            const receipt = d.Screenshot_Path
+                ? `<a href="../../backend${d.Screenshot_Path}" target="_blank" style="color:#ffd464;">View</a>`
+                : '—';
+            const toggle = verified
+                ? `<button onclick="setDonation(${d.Donation_ID}, false)">Unverify</button>`
+                : `<button onclick="setDonation(${d.Donation_ID}, true)">Verify</button>`;
+            return `
+            <tr>
+                <td>${d.Donation_ID}</td>
+                <td>${d.Sender_Name}</td>
+                <td>${d.Transaction_Date}</td>
+                <td>${d.Amount_PHP}</td>
+                <td>${d.Payment_Channel || '—'}</td>
+                <td>${d.Reference_Number || '—'}</td>
+                <td>${receipt}</td>
+                <td>${d.Verification_Status}</td>
+                <td>${toggle} <button onclick="removeDonation(${d.Donation_ID})">Delete</button></td>
+            </tr>`;
+        }).join('');
+    }
+
+    async function setDonation(id, verify) {
+        const r = verify ? await verifyDonation(id) : await unverifyDonation(id);
+        showNotification(r.success ? r.message : apiErrorText(r), r.success ? 'success' : 'error');
+        if (r.success) loadDonations();
+    }
+
+    async function removeDonation(id) {
+        if (!confirm('Delete donation #' + id + '?')) return;
+        const r = await deleteDonation(id);
+        showNotification(r.success ? r.message : apiErrorText(r), r.success ? 'success' : 'error');
+        if (r.success) loadDonations();
+    }
+
+    document.addEventListener('DOMContentLoaded', loadDonations);
+</script>
 
 </body>
 </html>

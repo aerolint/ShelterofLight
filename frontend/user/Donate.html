@@ -116,7 +116,7 @@
             <label>Amount in PHP</label><input type="number" name="amount" required style="display:block; width:100%; margin-bottom:10px;">
             <label>Payment Channel Used</label><input type="text" name="channel" required style="display:block; width:100%; margin-bottom:10px;">
             <label>Reference Number</label><input type="text" name="ref" required style="display:block; width:100%; margin-bottom:10px;">
-            <label>Screenshot</label><input type="file" style="padding: 10px; display:block; width:100%; margin-bottom:10px;">
+            <label>Screenshot</label><input type="file" name="screenshot" id="donateScreenshot" accept="image/*,application/pdf" style="padding: 10px; display:block; width:100%; margin-bottom:10px;">
             <label>Optional Message</label><textarea name="message" rows="3" style="display:block; width:100%; margin-bottom:10px;"></textarea>
             
             <button type="submit" style="width: 100%; margin-top: 15px; padding: 10px; cursor: pointer; background-color: #FFD700; border: none; font-weight: bold;">SUBMIT FORM</button>
@@ -132,10 +132,26 @@
 
 
 <script>
-    function submitDonateForm(event) {
+    async function submitDonateForm(event) {
         event.preventDefault();
-        document.getElementById('donate-form-box').style.display = 'none';
-        document.getElementById('submission-confirmation').style.display = 'block';
+        const form = event.target;
+        const fileInput = document.getElementById('donateScreenshot');
+        const result = await submitDonation({
+            sender_name: form.name.value.trim(),
+            transaction_date: form.date.value,        // <input type="date"> -> YYYY-MM-DD
+            amount_php: form.amount.value,
+            payment_channel: form.channel.value.trim(),
+            reference_number: form.ref.value.trim(),
+            optional_message: form.message.value.trim(),
+            screenshot: (fileInput.files && fileInput.files[0]) ? fileInput.files[0] : null,
+        });
+
+        if (result.success) {
+            document.getElementById('donate-form-box').style.display = 'none';
+            document.getElementById('submission-confirmation').style.display = 'block';
+        } else {
+            showNotification(apiErrorText(result), 'error');
+        }
     }
 </script>
 

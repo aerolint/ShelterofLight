@@ -98,5 +98,56 @@
     </div>
 </div>
 
+<script>
+    const PIE_COLORS = ['#FFD946', '#17a2b8', '#28a745', '#dc3545', '#9b59b6', '#e67e22', '#7f8c8d'];
+
+    async function loadDashboard() {
+        const result = await getDashboard('all');
+        if (!result.success) {
+            showNotification('Please log in as an admin to view the dashboard.', 'warning');
+            setTimeout(() => window.location.href = 'login-admin.html', 1200);
+            return;
+        }
+        renderRescueCounts(result.data.rescue_counts || []);
+        renderRows('adoption-table-body', result.data.pending_apps || [],
+            a => `<td>${a.Application_ID}</td><td>${a.Status}</td>`);
+        renderRows('donation-table-body', result.data.pending_donations || [],
+            d => `<td>${d.Reference_Number || '—'}</td><td>${d.Verification_Status}</td>`);
+        renderRows('volunteer-table-body', result.data.active_volunteers || [],
+            v => `<td>${v.User_ID}</td><td>${v.Full_Name || '—'}</td>`);
+    }
+
+    function renderRows(tbodyId, items, rowHtml) {
+        const body = document.getElementById(tbodyId);
+        body.innerHTML = items.length
+            ? items.map(i => `<tr>${rowHtml(i)}</tr>`).join('')
+            : `<tr><td colspan="2" style="color:#888;">None</td></tr>`;
+    }
+
+    function renderRescueCounts(counts) {
+        const total = counts.reduce((s, c) => s + c.count, 0);
+        const pie = document.getElementById('rescue-pie-chart');
+        const legend = document.getElementById('rescue-legend');
+        if (total === 0) {
+            pie.style.background = '#444';
+            legend.innerHTML = '<em>No rescues yet.</em>';
+            return;
+        }
+        let acc = 0;
+        const stops = counts.map((c, i) => {
+            const start = (acc / total) * 360;
+            acc += c.count;
+            const end = (acc / total) * 360;
+            return `${PIE_COLORS[i % PIE_COLORS.length]} ${start}deg ${end}deg`;
+        });
+        pie.style.background = `conic-gradient(${stops.join(', ')})`;
+        legend.innerHTML = counts.map((c, i) =>
+            `<div><span style="display:inline-block;width:10px;height:10px;background:${PIE_COLORS[i % PIE_COLORS.length]};margin-right:6px;"></span>${c.label}: <strong>${c.count}</strong></div>`
+        ).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', loadDashboard);
+</script>
+
 </body>
 </html>

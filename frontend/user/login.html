@@ -10,16 +10,32 @@
     <h2 style="text-align: center; color: #000; margin: 0;">WELCOME BACK</h2>
 
     <div class="login-container">
-        <form onsubmit="event.preventDefault(); window.location.href='index.html';">
+        <form onsubmit="handleLogin(event)">
             <label>Username</label>
             <input type="text" name="Username" required>
-            
+
             <label>Password</label>
             <input type="password" name="Password" required>
-            
+
             <button type="submit" style="width: 100%; padding: 12px; cursor: pointer;">LOGIN</button>
         </form>
     </div>
+
+    <script>
+    async function handleLogin(event) {
+        event.preventDefault();
+        const form = event.target;
+        const username = form.Username.value.trim();
+        const password = form.Password.value;
+        const result = await loginUser(username, password);
+        if (result.success) {
+            showNotification(result.message || 'Login successful.', 'success');
+            window.location.href = (result.role === 'Admin') ? 'dashboard.html' : 'index.html';
+        } else {
+            showNotification(apiErrorText(result), 'error');
+        }
+    }
+    </script>
  
     <div class="signup-text">
         <p>DON'T HAVE AN ACCOUNT YET? <br> 

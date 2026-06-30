@@ -9,7 +9,7 @@
     <h1 style="text-align: center; color: #000; margin: 0;">CREATE AN ACCOUNT</h1>
 
     <div class="login-container">
-        <form action="" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault(); window.location.href='index.html';">
+        <form enctype="multipart/form-data" onsubmit="handleRegister(event)">
             <label>First Name</label>
             <input type="text" name="First_Name" required>
             
@@ -36,8 +36,34 @@
     </div>
 
     <div class="signup-text">
-        <p>ALREADY HAVE AN ACCOUNT? <br> 
+        <p>ALREADY HAVE AN ACCOUNT? <br>
         <a href="login.html" style="color: #000; font-weight: bold;">Login</a></p>
     </div>
+
+    <script>
+    async function handleRegister(event) {
+        event.preventDefault();
+        const form = event.target;
+        const password = form.Password.value;
+        if (password.length < 8) {
+            showNotification('Password must be at least 8 characters.', 'warning');
+            return;
+        }
+        const result = await registerUser({
+            username: form.Username.value.trim(),
+            password,
+            confirm_password: password,
+            full_name: (form.First_Name.value.trim() + ' ' + form.Last_Name.value.trim()).trim(),
+            email: form.Email.value.trim(),
+            contact_number: '+63' + form.Phone_Number.value.trim(),
+        });
+        if (result.success) {
+            showNotification(result.message || 'Account created!', 'success');
+            window.location.href = 'index.html';
+        } else {
+            showNotification(apiErrorText(result), 'error');
+        }
+    }
+    </script>
 
 </body>

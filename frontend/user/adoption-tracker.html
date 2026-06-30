@@ -74,17 +74,32 @@
         <h2 style="text-align: center; font-weight: bold; font-size: 36px; margin-bottom: 25px; margin-top: 0;">
             ADOPTION<br>Tracker Inquiry
         </h2>
-        <p><strong>Application ID:</strong><br></p>
-        <p><strong>Target Rescue Name:</strong><br></p>
-        <p><strong>Date Submitted:</strong><br></p>
-        <p><strong>Application Status:</strong><br>Under Review</p>
+        <p><strong>Application ID:</strong><br><span id="res-id"></span></p>
+        <p><strong>Applicant Name:</strong><br><span id="res-name"></span></p>
+        <p><strong>Target Rescue Name:</strong><br><span id="res-rescue"></span></p>
+        <p><strong>Date Submitted:</strong><br><span id="res-date"></span></p>
+        <p><strong>Application Status:</strong><br><span id="res-status"></span></p>
     </div>
 
 </div>
 
 <script>
-    function showTrackerResults(event) {
+    async function showTrackerResults(event) {
         event.preventDefault();
+        const form = event.target;
+        const result = await trackAdoption(form.email.value.trim(), form['tracker-code'].value.trim());
+
+        if (!result.success) {
+            showNotification(apiErrorText(result), 'error');
+            return;
+        }
+        const a = result.data;
+        document.getElementById('res-id').innerText = a.Application_ID;
+        document.getElementById('res-name').innerText = a.Applicant_Name;
+        document.getElementById('res-rescue').innerText = a.RescueName + ' (' + (a.Species || 'N/A') + ')';
+        document.getElementById('res-date').innerText = a.Submitted_At;
+        document.getElementById('res-status').innerText = a.Status;
+
         document.getElementById('tracker-form').style.display = 'none';
         document.getElementById('tracker-results').style.display = 'block';
     }
